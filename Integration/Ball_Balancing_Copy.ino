@@ -17,9 +17,21 @@ int ts[2];  //ts[0] is x, ts[1] is y
 Machine machine(2, 3.125, 1.75, 3.669291339);     //(d, e, f, g) object to define the lengths of the machine
 
 //stepper motors
-AccelStepper stepperA(1, 1, 2);  //(driver type, STEP, DIR) Driver A
-AccelStepper stepperB(1, 3, 4);  //(driver type, STEP, DIR) Driver B
-AccelStepper stepperC(1, 5, 6);  //(driver type, STEP, DIR) Driver C
+const int dirPin1 = 2;
+const int stepPin1 = 3; //pulsePin
+const int enPin1 = 4;
+
+const int dirPin2 = 5;
+const int stepPin2 = 6; //pulsePin
+const int enPin2 = 7;
+
+const int dirPin3 = 8;
+const int stepPin3 = 9; //pulsePin
+const int enPin3 = 10;
+
+AccelStepper stepperA(1, stepPin1, dirPin1);  //(driver type, STEP, DIR) Driver A
+AccelStepper stepperB(1, stepPin2, dirPin2);  //(driver type, STEP, DIR) Driver B
+AccelStepper stepperC(1, stepPin3, dirPin3);  //(driver type, STEP, DIR) Driver C
 MultiStepper steppers;           // Create instance of MultiStepper
 
 //stepper motor variables
