@@ -1,4 +1,5 @@
-#include <AccelStepper.h>
+#include <f401reMap.h>
+
 const int dirPin1 = 2;
 const int stepPin1 = 3; //pulsePin
 const int enPin1 = 4;
@@ -17,6 +18,7 @@ AccelStepper O
 */
 
 void setup() {
+  Serial.begin(9600);
   pinMode(stepPin1, OUTPUT);
   pinMode(dirPin1, OUTPUT);
   pinMode(enPin1, OUTPUT);
@@ -47,14 +49,14 @@ void loop() {
     digitalWrite(stepPin2, LOW);
     digitalWrite(stepPin3, HIGH);
     digitalWrite(stepPin3, LOW);
-    delayMicroseconds(300);
+    delayMicroseconds(200);
   }
   delay(50);
 
   digitalWrite(dirPin1, HIGH);
   digitalWrite(dirPin2, HIGH);
   digitalWrite(dirPin3, HIGH);
-  S
+  
   for(int i = 0; i < 400; i++) {
     digitalWrite(stepPin1, HIGH);
     digitalWrite(stepPin1, LOW);
@@ -62,7 +64,8 @@ void loop() {
     digitalWrite(stepPin2, LOW);
     digitalWrite(stepPin3, HIGH);
     digitalWrite(stepPin3, LOW);
-    delayMicroseconds(300);
+    delayMicroseconds(200);
   }
+  Serial.println("Loop done");
   delay(50);
 }
