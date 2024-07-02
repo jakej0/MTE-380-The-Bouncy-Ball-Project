@@ -1,0 +1,71 @@
+#include <f401reMap.h>
+
+const int dirPin1 = D2;
+const int stepPin1 = D3; //pulsePin
+const int enPin1 = D4;
+
+const int dirPin2 = D5;
+const int stepPin2 = D6; //pulsePin
+const int enPin2 = D7;
+
+const int dirPin3 = D8;
+const int stepPin3 = D9; //pulsePin
+const int enPin3 = D10;
+
+/*const float St_Speed = 9000;
+const float St_Accel = 900;
+AccelStepper O
+*/
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(stepPin1, OUTPUT);
+  pinMode(dirPin1, OUTPUT);
+  pinMode(enPin1, OUTPUT);
+
+  pinMode(stepPin2, OUTPUT);
+  pinMode(dirPin2, OUTPUT);
+  pinMode(enPin2, OUTPUT);
+
+  pinMode(stepPin3, OUTPUT);
+  pinMode(dirPin3, OUTPUT);
+  pinMode(enPin3, OUTPUT);
+
+  digitalWrite(enPin1, LOW); //enables the driver
+  digitalWrite(enPin2, LOW);
+  digitalWrite(enPin3, LOW); 
+}
+
+void loop() {
+  //Enables motor to move clockwise or anticlockwise
+  digitalWrite(dirPin1, LOW);
+  digitalWrite(dirPin2, LOW);
+  digitalWrite(dirPin3, LOW);
+  
+  for(int i = 0; i < 1500; i++) {
+    digitalWrite(stepPin1, HIGH);
+    digitalWrite(stepPin1, LOW);
+    digitalWrite(stepPin2, HIGH);
+    digitalWrite(stepPin2, LOW);
+    digitalWrite(stepPin3, HIGH);
+    digitalWrite(stepPin3, LOW);
+    delayMicroseconds(30);
+  }
+  delay(50);
+
+  digitalWrite(dirPin1, HIGH);
+  digitalWrite(dirPin2, HIGH);
+  digitalWrite(dirPin3, HIGH);
+  
+  for(int i = 0; i < 1500; i++) {
+    digitalWrite(stepPin1, HIGH);
+    digitalWrite(stepPin1, LOW);
+    digitalWrite(stepPin2, HIGH);
+    digitalWrite(stepPin2, LOW);
+    digitalWrite(stepPin3, HIGH);
+    digitalWrite(stepPin3, LOW);
+    delayMicroseconds(30);
+  }
+  Serial.println("Loop done");
+  delay(50);
+}
