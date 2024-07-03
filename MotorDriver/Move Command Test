@@ -1,5 +1,5 @@
 #include <AccelStepper.h>
-
+#include <MultiStepper.h>
 const int dirPin1 = 2;
 const int stepPin1 = 3; //pulsePin
 const int enPin1 = 4;
@@ -15,19 +15,20 @@ const int enPin3 = 10;
 AccelStepper stepper1(AccelStepper::FULL4WIRE, stepPin1, dirPin1);
 AccelStepper stepper2(AccelStepper::FULL4WIRE, stepPin2, dirPin2);
 AccelStepper stepper3(AccelStepper::FULL4WIRE, stepPin3, dirPin3);
+MultiStepper steppers;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(stepPin1, OUTPUT);
-  pinMode(dirPin1, OUTPUT);
+ //pinMode(stepPin1, OUTPUT);
+  //pinMode(dirPin1, OUTPUT);
   pinMode(enPin1, OUTPUT);
 
-  pinMode(stepPin2, OUTPUT);
-  pinMode(dirPin2, OUTPUT);
+  //pinMode(stepPin2, OUTPUT);
+  //pinMode(dirPin2, OUTPUT);
   pinMode(enPin2, OUTPUT);
 
-  pinMode(stepPin3, OUTPUT);
-  pinMode(dirPin3, OUTPUT);
+  //pinMode(stepPin3, OUTPUT);
+  //pinMode(dirPin3, OUTPUT);
   pinMode(enPin3, OUTPUT);
 
   digitalWrite(enPin1, HIGH);        //sets the drivers off initially
@@ -42,17 +43,8 @@ void setup() {
 
 void loop() {
 
-  stepper1.setMaxSpeed(1000);
-  stepper2.setMaxSpeed(1000);
-  stepper3.setMaxSpeed(1000);
-
-  stepper1.moveTo(50);
-  stepper2.moveTo(50);
-  stepper3.moveTo(50);
-
-  stepper1.run();
-  stepper2.run();
-  stepper3.run();
+  steppers.moveTo(50);
+  steppers.runSpeedToPosition();
   
   long currentPosition1 = stepper1.currentPosition();
   Serial.print("Motor 1 position: ");
@@ -67,13 +59,9 @@ void loop() {
   Serial.println(currentPosition3);
   delay(2000);
 
-  stepper1.moveTo(0);
-  stepper2.moveTo(0);
-  stepper3.moveTo(0);
+  steppers.moveTo(0);
 
-  stepper1.run();
-  stepper2.run();
-  stepper3.run();
+  steppers.runSpeedToPosition();
 
   Serial.print("Motor 1 position: ");
   Serial.println(currentPosition1);
