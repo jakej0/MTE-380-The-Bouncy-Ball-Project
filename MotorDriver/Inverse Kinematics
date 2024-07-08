@@ -1,0 +1,70 @@
+import math
+from math import sqrt, atan2
+
+L = 3.125  # distance from the center of the platform to any of its corners
+L1 = 3.669291339
+L2 = 1.75
+L3 = 2  # distance from the center of the base to any of its corners
+h = 5  # desired height of the platform center
+
+A = 2
+B = 0
+C = 6
+
+# motor 1 S joint location
+# Note that motor 1 facing the XZ plane and cannot tilt in the y direction
+Z1 = h - (A * L) / sqrt(pow(A, 2) + pow(C, 2))
+X1 = sqrt(pow(L, 2) - pow((h - Z1), 2))
+
+# motor 2 S joint location
+X2 = - (L * C) / sqrt(pow(A, 2) + 3 * pow(B, 2) + 4 * pow(C, 2) - 2 * sqrt(3) * A * B)
+Y2 = (sqrt(3) * L * C) / sqrt(pow(A, 2) + 3 * pow(B, 2) + 4 * pow(C, 2) - 2 * sqrt(3) * A * B)
+Z2 = h + (L3 * (-sqrt(3) * A + B)) / sqrt(pow(A, 2) + 3 * pow(B, 2) + 4 * pow(C, 2) - 2 * sqrt(3) * A * B)
+
+# motor 3 S joint location
+X3 = - (L * C) / sqrt(pow(A, 2) + 3 * pow(B, 2) + 4 * pow(C, 2) - 2 * sqrt(3) * A * B)
+Y3 = - (sqrt(3) * L * C) / sqrt(pow(A, 2) + 3 * pow(B, 2) + 4 * pow(C, 2) - 2 * sqrt(3) * A * B)
+Z3 = h + (L3 * (sqrt(3) * A + B)) / sqrt(pow(A, 2) + 3 * pow(B, 2) + 4 * pow(C, 2) - 2 * sqrt(3) * A * B)
+
+# motor 1 P joint location
+d1 = (X1 - L3) / Z1
+e1 = - (pow(X1, 2) + pow(Z1, 2) + pow(L2, 2) + pow(L1, 2) + pow(L3, 2)) / (2 * Z1)
+f1 = pow(d1, 2) + 1
+g1 = 2 * (d1 * e1 + L3)
+h1 = pow(e1, 2) - pow(L2, 2) - pow(L3, 2)
+
+Xa = (-g1 + sqrt(abs(pow(g1, 2) - 4 * f1 * h1))) / (2 * d1)
+Za = sqrt(abs(pow(L2, 2) - pow((Xa - L3), 2)))
+
+Angle_1 = atan2(Za / L2, (Xa - L3) / L2)
+
+# motor 2 P joint location
+d2 = - (X2 - sqrt(3) * Y2 + 2 * L3) / Z2
+e2 = (pow(X2, 2) + pow(Y2, 2) + pow(Z2, 2) + pow(L2, 2) - pow(L1, 2) - pow(L3, 2)) / (2 * Z2)
+f2 = pow(d2, 2) + 4
+g2 = 2 * d2 * e2 + 4 * L3
+h2 = pow(e2, 2) + pow(L3, 2) - pow(L2, 2)
+
+Xb = (-g2 - sqrt(abs(pow(g2, 2) - 4 * f2 * h2))) / (2 * f2)
+Yb = -sqrt(3) * Xb
+Zb = sqrt(abs(pow(L2, 2) - 4 * pow(Xb, 2) - 4 * L3 * Xb - pow(L3, 2)))
+
+Angle_2 = 90 - atan2(sqrt(pow(Xb, 2) + pow(Yb, 2)) - L3, Zb)
+
+# motor 3 P joint location
+d3 = - (X3 + sqrt(3) * Y3 + 2 * L3) / Z3
+e3 = (pow(X3, 2) + pow(Y3, 2) + pow(Z3, 2) + pow(L2, 2) - pow(L1, 2) - pow(L3, 2)) / (2 * Z3)
+f3 = pow(d3, 2) + 4
+g3 = 2 * d3 * e3 + 4 * L3
+h3 = pow(e3, 2) + pow(L3, 2) - pow(L2, 2)
+
+Xc = (-g3 - sqrt(abs(pow(g3, 2) - 4 * f3 * h3))) / (2 * f3)
+Yc = sqrt(3) * Xc
+Zc = sqrt(abs(pow(L2, 2) - 4 * pow(Xc, 2) - 4 * L3 * Xc - pow(L3, 2)))
+
+Angle_3 = 90 - atan2(sqrt(pow(Xc, 2) + pow(Yc, 2)) - L3, Zc)
+
+# Print results for verification
+print("Angle_1:", Angle_1)
+print("Angle_2:", Angle_2)
+print("Angle_3:", Angle_3)
